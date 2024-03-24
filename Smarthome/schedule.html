@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timer Page</title>
+  <link rel="icon" type="image/png" href="./img/favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url(./img/background.gif);
+      background-size: cover;
+    }
+    h1 {
+      text-align: center;
+      color: red;
+    }
+    nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: red;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 3px;
+            border-radius: 10px;
+        }
+        nav ul li a:hover {
+            color: greenyellow;
+        }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    select, input[type="number"] {
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: greenyellow;
+    }
+    #timer, #status {
+      margin-top: 20px;
+    }
+    .container {
+      color: red;
+      max-width: 250px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #timerContainer {
+      display: none;
+      max-width: 250px;
+      margin: 0 auto;
+      background-color: #ffe6e6;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #timer, #status {
+      color: #d9534f;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Timer</h1>
+  <nav>
+      <ul>
+        <li><a href="index.html" title="Go back to Home Page"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="threshold.html" title="Go to Alert Page to set threshold for sensor and when the threshold is exceeded, it will output a notification"><i class="fa-solid fa-bell"></i> Alert</a></li>
+        <li><a href="login.html" title="Bye!"><i class="fa-regular fa-circle-xmark"></i> Log out</a></li>
+      </ul>
+  </nav>
+  <div class="container">
+  <label for="timeInterval">Set time interval (in seconds):</label>
+  <input type="number" id="timeInterval" min="1" max="3600" value="60">
+
+  <label for="room">Room:</label>
+  <select id="room" onchange="updateDevices()">
+    <option value="Living_room">Living Room</option>
+    <option value="Kitchen">Kitchen</option>
+    <option value="Bed_room">Bedroom</option>
+    <!-- Add more options for other rooms -->
+  </select>
+
+  <label for="device">Device:</label>
+  <select id="device">
+    <!-- Options will be populated based on selected room -->
+  </select>
+  <br>
+  <button onclick="startToggle()">Start</button>
+  <br>
+  <br>
+  <div>Notice: ONLY ONE device per time</div>
+  </div>
+  <br>
+  <div id="timerContainer">
+    <div id="timer"></div>
+    <div id="status"></div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script>
+  // Your web app's Firebase configuration
+  
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+    const database = firebase.database();
+    let intervalId;
+
+    // Object to store devices for each room
+    const devicesByRoom = {
+      Living_room: ['DEN', 'MAYLANH', 'WIFI', 'TVPK', 'CAMPK'],
+      Kitchen: ['DEN', 'MAYLANH', 'NC', 'BD', 'CAMPB'],
+      Bed_room: ['DEN', 'MAYLANH', 'TVPN', 'CAMPN'],
+    };
+
+const deviceMapping = {
+  DEN: 'Bulb',
+  MAYLANH: 'Air Conditioner',
+  WIFI: 'Wi-Fi',
+  TVPK: 'Television',
+  TVPN: 'Television',
+  CAMPK: 'Security Camera',
+  CAMPN: 'Security Camera',
+  CAMPB: 'Security Camera',
+  NC: 'Cooker',
+  BD: 'Stove',
+  Light: 'Lamp',
+};
+
+
+    function updateDevices() {
+      const room = document.getElementById('room').value;
+      const deviceSelect = document.getElementById('device');
+      deviceSelect.innerHTML = '';
+      
+      // Populate device options based on selected room
+      devicesByRoom[room].forEach(device => {
+        const option = document.createElement('option');
+        option.value = device;
+        option.text = deviceMapping[device] || device;
+        deviceSelect.appendChild(option);
+      });
+    }
+
+    function startToggle() {
+      const room = document.getElementById('room').value;
+      const device = document.getElementById('device').value;
+      const timeInterval = parseInt(document.getElementById('timeInterval').value) * 1000;
+      intervalId = setInterval(() => toggleStatus(room, device), timeInterval);
+      startTimer(timeInterval);
+    }
+
+    function toggleStatus(room, device) {
+      clearInterval(intervalId);
+
+      database.ref(`${room}/${device}`).once('value', (snapshot) => {
+        const currentStatus = snapshot.val();
+        const newStatus = currentStatus === "ON" ? "OFF" : "ON";
+
+        database.ref(`${room}/${device}`).set(newStatus)
+          .then(() => {
+            console.log(`${device} in ${room} status changed to ${newStatus}`);
+            document.getElementById('status').innerText = `Status: ${newStatus}`;
+          })
+          .catch((error) => {
+            console.error(`Error updating ${device} status in ${room}:`, error);
+          });
+      });
+    }
+
+    function startTimer(timeInterval) {
+      let timeLeft = timeInterval / 1000;
+
+      const timerElement = document.getElementById('timer');
+      timerElement.innerText = `Timer: ${timeLeft} seconds`;
+
+      const timerInterval = setInterval(() => {
+        timeLeft--;
+        timerContainer.style.display = 'block';
+        timerElement.innerText = `Timer: ${timeLeft} seconds`;
+
+        if (timeLeft === 0) {
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+    }
+
+    // Update devices initially based on default room
+    updateDevices();
+  </script>
+</body>
+</html>

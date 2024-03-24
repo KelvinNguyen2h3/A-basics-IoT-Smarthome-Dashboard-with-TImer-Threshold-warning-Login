@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smarthome</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">SMART HOME</h1>
+            <img src="./img/logo.png">
+            
+        </header>
+        
+        <main class="main">
+            <!-- Menu -->
+            <nav class="menu">
+                <ul>
+                  <li style="background-color: rgba(255, 192, 203, 0.5); border: 3px solid pink;" title="Switch to Living room Dashboard"><a href="#" onclick="switchPage(event, 'living_room')"><i class="fa-solid fa-chair"></i> Living Room</a></li>
+                  <li style="background-color: rgba(255, 165, 0, 0.5); border: 3px solid orange" title="Switch to Kitchen Dashboard"><a href="#" onclick="switchPage(event, 'kitchen')"><i class="fa-solid fa-utensils"></i> Kitchen</a></li>
+                  <li style="background-color: rgba(128, 0, 128, 0.5); border: 3px solid purple;" title="Switch to Bedroom Dashboard"><a href="#" onclick="switchPage(event, 'bed_room')"><i class="fa-solid fa-moon"></i> Bedroom</a></li>
+                  <li style="background-color: rgba(139, 69, 19, 0.5); border: 3px solid brown;" title="Go to Timer Page to set time on/off for device"><a href="schedule.html"><i class="fa-solid fa-clock"></i> Timer</a></li>
+                  <li style=" background-color: rgba(255, 0, 0, 0.5); border: 3px solid red;" title="Go to Alert Page to set threshold for sensor and when the threshold is exceeded, it will output a notification"><a href="threshold.html"><i class="fa-solid fa-bell"></i> Alert</a></li>
+                  <li style="background-color: rgba(255, 255, 255, 0.5); border: 3px solid white;" title="Bye!"><a href="login.html"><i class="fa-regular fa-circle-xmark"></i> Log out</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Content -->
+            <div class="content">
+                <!-- Livingroom -->
+                <section id="living_room">
+                <div class="room">
+
+                    <div class="slot">
+                        <div>
+                            <h1 title="Temperature" style="color: balck"><i class="fa-solid fa-temperature-three-quarters"></i>Temp:
+                                <br></br>
+                                <span style="color: red;" id="ndpk">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <h1 style="color: balck"><i class="fa-solid fa-water"></i>Humid:
+                                <br></br>
+                                <span style="color: blue;" id="dapk">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <h1 style="color: balck"><i class="fa-solid fa-fire-flame-simple"></i>Gas:
+                                <br></br>
+                                <span style="color: brown;" id="kgpk">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <h1 style="color: balck"><i class="fa-solid fa-sun"></i>Light:
+                                <br></br>
+                                <span style="color: goldenrod" id="aspk">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <div>
+                                <button id="dpk_on" style="background-color: green; font-weight: bold;">ON</button>
+                                <button id="dpk_off" style="background-color: red; font-weight: bold;">OFF</button>
+                            </div>	
+                        </div>
+                        
+                        <img id="dpk_img" src="./img/bulb_off.png">
+                        <div>
+                            <strong>BULB</strong>
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="room">
+                    <div class="slot">
+                        <div>
+                            <div>
+                                <button  id="qpk_0" style="background-color: white; font-weight: bold;">0</button>
+                                <button  id="qpk_1" style="background-color: aqua; font-weight: bold;">1</button>
+                                <button  id="qpk_2" style="background-color: aqua; font-weight: bold;">2</button>
+                                <button  id="qpk_3" style="background-color: aqua; font-weight: bold;">3</button>
+                            </div>	
+                        </div>
+                        <br>
+                        <div id="qpk_value"></div>
+                        <img id="qpk_img" src="./img/fan_off.png">
+                        <div>
+                            <strong>FAN</strong>
+                            <i class="fa-solid fa-fan"></i>
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="mlpk" id="mlpk">
+                                <label for="mlpk">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                            <div id="slider_mlpk_value">22</div>
+                            <input type="range" min="18" max="30" value="22" class="slider" id="slider_mlpk_id">
+                        </div>
+                        
+                        <img id="mlpk_img" src="./img/aircon_off.png">
+                        <div>
+                            <strong title="air conditioner">AIRCON</strong>
+                            
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                        <button id="toggleButton" style="font-weight: bold;" onclick="toggle()"></button>
+                        </div>
+                        <img src="./img/wifi.png">
+                        <div>
+                            <strong>ROUTER</strong>
+                            <i class="fa-solid fa-wifi"></i>
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="tvpk" id="tvpk">
+                                <label for="tvpk">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                            <br>
+                            <label for="channel_tvpk">Channel:</label>
+                            <input type="number" id="channel_tvpk" value="1" min="1" max="100">
+                        </div>
+                        
+                        <img src="./img/TV.png">
+                        <div>
+                            <strong>TV</strong>
+                            <i class="fa-solid fa-tv"></i>
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="campk" id="campk">
+                                <label for="campk">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <img src="./img/camera.png">
+                        <div>
+                            <strong>CAMERA</strong>
+                            
+                        </div>
+                    </div>
+                </div>
+                </section>
+
+
+                <!-- Kitchen -->
+                <section id="kitchen" style="display: none;">
+                <div class="room">
+                    <div class="slot">
+                        <div>
+                            <h1 title="Temperature" style="color: balck"><i class="fa-solid fa-temperature-three-quarters"></i>Temp:
+                                <br></br>
+                                <span style="color: red;" id="ndpb">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <h1 style="color: balck"><i class="fa-solid fa-water"></i>Humid:
+                                <br></br>
+                                <span style="color: blue;" id="dapb">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <h1 style="color: balck"><i class="fa-solid fa-fire-flame-simple"></i>Gas:
+                                <br></br>
+                                <span style="color: brown;" id="kgpb">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <h1 style="color: balck"><i class="fa-solid fa-sun"></i>Light:
+                                <br></br>
+                                <span style="color: goldenrod;" id="aspb">None</span>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div>
+                                <button id="dpb_on" style="background-color: green; font-weight: bold;">ON</button>
+                                <button  id="dpb_off" style="background-color: red; font-weight: bold;">OFF</button>
+                            </div>	
+                        </div>
+                        
+                        <img id="dpb_img" src="./img/bulb_off.png">
+                        <div>
+                            <strong>BULB</strong>
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="room">
+                    <div class="slot">
+                        <div>
+                            <div>
+                                <button id="qpb_0" style="background-color: white; font-weight: bold;">0</button>
+                                <button id="qpb_1" style="background-color: aqua; font-weight: bold;">1</button>
+                                <button id="qpb_2" style="background-color: aqua; font-weight: bold;">2</button>
+                                <button id="qpb_3" style="background-color: aqua; font-weight: bold;">3</button>
+                            </div>	
+                        </div>
+                        <br>
+                        <div id="qpb_value"></div>
+                        <img id="qpb_img" src="./img/fan_off.png">
+                        <div>
+                            <strong>FAN</strong>
+                            <i class="fa-solid fa-fan"></i>
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="mlpb" id="mlpb">
+                                <label for="mlpb">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                            <div id="slider_mlpb_value">22</div>
+                            <input type="range" min="18" max="30" value="22" class="slider" id="slider_mlpb_id">
+                        </div>
+                               
+                        <img id="mlpb_img" src="./img/aircon_off.png">
+                        <div>
+                            <strong title="air conditioner">AIRCON</strong>
+                            
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="nc" id="nc">
+                                <label for="nc">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <img src="./img/noicom.png">
+                        <div>
+                            <strong>COOKER</strong>
+                          
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="bd" id="bd">
+                                <label for="bd">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                            <button id="small_fire" style="background-color: yellow; font-weight: bold;">S</button>
+                            <button id="medium_fire" style="background-color: orange; font-weight: bold;">M</button>
+                            <button id="large_fire" style="background-color: red; font-weight: bold;">L</button>
+                        </div>
+                        <div id="muc_bd"></div>
+                        <img src="./img/stove.png">
+                        <div>
+                            <strong>STOVE</strong>
+                            <i class="fa-solid fa-fire-burner"></i>
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="campb" id="campb">
+                                <label for="campb">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <img src="./img/camera.png">
+                        <div>
+                            <strong>CAMERA</strong>
+                            
+                        </div>
+                    </div>
+                </div>
+                </section>
+
+                <!-- Bedroom -->
+                <section id="bed_room" style="display: none;">
+                <div class="room">
+                    <div class="slot">
+                        <div>
+                            <h1 title="Temperature" style="color: balck"><i class="fa-solid fa-temperature-three-quarters"></i>Temp:
+                                <br></br>
+                                <span style="color: red;" id="ndpn">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <h1 style="color: balck"><i class="fa-solid fa-water"></i>Humid:
+                                <br></br>
+                                <span style="color: blue;" id="dapn">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <h1 style="color: balck"><i class="fa-solid fa-fire-flame-simple"></i>Gas:
+                                <br></br>
+                                <span style="color: brown;" id="kgpn">None</span>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="slot">
+                        <div>
+                            <h1 style="color: balck"><i class="fa-solid fa-sun"></i>Light:
+                                <br></br>
+                                <span style="color: goldenrod;" id="aspn">None</span>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div>
+                                <button id="dpn_on" style="background-color: green; font-weight: bold;">ON</button>
+                                <button id="dpn_off" style="background-color: red; font-weight: bold;">OFF</button>
+                            </div>	
+                        </div>
+                        <img id="dpn_img" src="./img/bulb_off.png">
+                        <div>
+                            <strong>BULB</strong>
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="room">
+                    <div class="slot">
+                        <div>
+                            <div>
+                                <button id="qpn_0" style="background-color: white; font-weight: bold;">0</button>
+                                <button id="qpn_1" style="background-color: aqua; font-weight: bold;">1</button>
+                                <button id="qpn_2" style="background-color: aqua; font-weight: bold;">2</button>
+                                <button id="qpn_3" style="background-color: aqua; font-weight: bold;">3</button>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="qpn_value"></div>
+                        <img id="qpn_img" src="./img/fan_off.png">
+                        <div>
+                            <strong>FAN</strong>
+                            <i class="fa-solid fa-fan"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="mlpn" id="mlpn">
+                                <label for="mlpn">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                            <div id="slider_mlpn_value">22</div>
+                            <input type="range" min="18" max="30" value="22" class="slider" id="slider_mlpn_id">
+                        </div>
+                        
+                        <img id="mlpn_img" src="./img/aircon_off.png">
+                        <div>
+                            <strong title="air conditioner">AIRCON</strong>
+                            
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="tvpn" id="tvpn">
+                                <label for="tvpn">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                            <br>
+                            <label for="channel_tvpn">Channel:</label>
+                            <input type="number" id="channel_tvpn" value="1" min="1" max="100">
+                        </div>
+                        
+                        <img src="./img/TV.png">
+                        <div>
+                            <strong>TV</strong>
+                            <i class="fa-solid fa-tv"></i>
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div id="slider_lamp_value">3</div>
+                            <input type="range" min="0" max="5" value="3" class="slider" id="slider_lamp_id">
+                        </div>
+                        
+                        <img id="lamp_img" src="./img/lamp.png">
+                        <div>
+                            <strong>LAMP</strong>
+                        </div>
+                    </div>
+                    <div class="slot">
+                        <div>
+                            <div class="appliance">
+                                <input type="checkbox" name="campn" id="campn">
+                                <label for="campn">
+                                  <span data-o="opened" data-c="closed"></span>
+                                  <small></small>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <img src="./img/camera.png">
+                        <div>
+                            <strong>CAMERA</strong>
+                            
+                        </div>
+                    </div>
+                </div>
+                </section>
+            </div>
+        
+        </main>
+            
+
+
+        <footer class="footer">
+            
+            <div class="member">
+                <img src="./img/member1.png">
+                <p>T.Mew @KelvinNguyen2h3</p>
+            </div>
+        </footer>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script> 
+
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js"></script>
+
+	<script src="control.js"></script>
+</body>
+</html>

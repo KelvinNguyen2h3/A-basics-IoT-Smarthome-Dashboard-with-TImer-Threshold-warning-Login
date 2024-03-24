@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threshold Alert Page</title>
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: url(./img/background.gif);
+            background-size: cover;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: brown;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: brown;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 3px;
+            border-radius: 10px;
+        }
+        nav ul li a:hover {
+            color: greenyellow;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        fieldset {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        legend {
+            font-weight: bold;
+            color: brown;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: brown;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: greenyellow;
+        }
+        #alertContainer {
+            display: none;
+            margin-top: 20px;
+            background-color: #ffe6e6;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #alerts {
+            color: #d9534f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Threshold Alert Configuration</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html" title="Go back to Home Page"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="schedule.html" title="Go to Timer Page to set time on/off for device"><i class="fa-solid fa-clock"></i> Timer</a></li>
+            <li><a href="login.html" title="Bye!"><i class="fa-regular fa-circle-xmark"></i> Log out</a></li>
+        </ul>
+    </nav>
+    <form id="thresholdForm">
+        <fieldset>
+            <legend>Living Room</legend>
+            <label for="temperatureThresholdLivingRoom">Temperature Threshold:</label>
+            <input type="number" id="temperatureThresholdLivingRoom" name="temperatureThresholdLivingRoom"><br>
+            <label for="humidityThresholdLivingRoom">Humidity Threshold:</label>
+            <input type="number" id="humidityThresholdLivingRoom" name="humidityThresholdLivingRoom"><br>
+            <label for="lightThresholdLivingRoom">Light Threshold:</label>
+            <input type="number" id="lightThresholdLivingRoom" name="lightThresholdLivingRoom"><br>
+            <label for="gasThresholdLivingRoom">Gas Threshold:</label>
+            <input type="number" id="gasThresholdLivingRoom" name="gasThresholdLivingRoom"><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Bed Room</legend>
+            <label for="temperatureThresholdBedRoom">Temperature Threshold:</label>
+            <input type="number" id="temperatureThresholdBedRoom" name="temperatureThresholdBedRoom"><br>
+            <label for="humidityThresholdBedRoom">Humidity Threshold:</label>
+            <input type="number" id="humidityThresholdBedRoom" name="humidityThresholdBedRoom"><br>
+            <label for="lightThresholdBedRoom">Light Threshold:</label>
+            <input type="number" id="lightThresholdBedRoom" name="lightThresholdBedRoom"><br>
+            <label for="gasThresholdBedRoom">Gas Threshold:</label>
+            <input type="number" id="gasThresholdBedRoom" name="gasThresholdBedRoom"><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Kitchen</legend>
+            <label for="temperatureThresholdKitchen">Temperature Threshold:</label>
+            <input type="number" id="temperatureThresholdKitchen" name="temperatureThresholdKitchen"><br>
+            <label for="humidityThresholdKitchen">Humidity Threshold:</label>
+            <input type="number" id="humidityThresholdKitchen" name="humidityThresholdKitchen"><br>
+            <label for="lightThresholdKitchen">Light Threshold:</label>
+            <input type="number" id="lightThresholdKitchen" name="lightThresholdKitchen"><br>
+            <label for="gasThresholdKitchen">Gas Threshold:</label>
+            <input type="number" id="gasThresholdKitchen" name="gasThresholdKitchen"><br>
+        </fieldset>
+
+        <button type="submit">Set Thresholds</button>
+    </form>
+
+    <div id="alertContainer">
+        <h2>Threshold Alerts</h2>
+        <div id="alerts"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+    
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const thresholdForm = document.getElementById('thresholdForm');
+
+        thresholdForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const livingRoomTemperatureThreshold = parseInt(document.getElementById('temperatureThresholdLivingRoom').value);
+        const livingRoomHumidityThreshold = parseInt(document.getElementById('humidityThresholdLivingRoom').value);
+        const livingRoomLightThreshold = parseInt(document.getElementById('lightThresholdLivingRoom').value);
+        const livingRoomGasThreshold = parseInt(document.getElementById('gasThresholdLivingRoom').value);
+
+        const bedRoomTemperatureThreshold = parseInt(document.getElementById('temperatureThresholdBedRoom').value);
+        const bedRoomHumidityThreshold = parseInt(document.getElementById('humidityThresholdBedRoom').value);
+        const bedRoomLightThreshold = parseInt(document.getElementById('lightThresholdBedRoom').value);
+        const bedRoomGasThreshold = parseInt(document.getElementById('gasThresholdBedRoom').value);
+
+        const kitchenTemperatureThreshold = parseInt(document.getElementById('temperatureThresholdKitchen').value);
+        const kitchenHumidityThreshold = parseInt(document.getElementById('humidityThresholdKitchen').value);
+        const kitchenLightThreshold = parseInt(document.getElementById('lightThresholdKitchen').value);
+        const kitchenGasThreshold = parseInt(document.getElementById('gasThresholdKitchen').value);
+
+        const roomStatus = {
+            Living_room: { temperature: false, humidity: false, light: false, gas: false },
+            Bed_room: { temperature: false, humidity: false, light: false, gas: false },
+            Kitchen: { temperature: false, humidity: false, light: false, gas: false }
+        };
+
+        checkThreshold('Living_room', livingRoomTemperatureThreshold, livingRoomHumidityThreshold, livingRoomLightThreshold, livingRoomGasThreshold, 'Living Room');
+        checkThreshold('Bed_room', bedRoomTemperatureThreshold, bedRoomHumidityThreshold, bedRoomLightThreshold, bedRoomGasThreshold, 'Bed Room');
+        checkThreshold('Kitchen', kitchenTemperatureThreshold, kitchenHumidityThreshold, kitchenLightThreshold, kitchenGasThreshold, 'Kitchen');
+
+        // Function to check if all rooms are OK
+        function checkAllOK() {
+            const rooms = Object.values(roomStatus);
+            const allOK = rooms.every(room => Object.values(room).every(status => status));
+            if (allOK) {
+                displayAlert('OK');
+            }
+        }
+
+        // Function to check threshold for each room
+        function checkThreshold(room, temperatureThreshold, humidityThreshold, lightThreshold, gasThreshold, roomName) {
+            const temperatureRef = db.ref(`${room}/Temp`);
+            const humidityRef = db.ref(`${room}/Humid`);
+            const lightRef = db.ref(`${room}/Light`);
+            const gasRef = db.ref(`${room}/Gas`);
+
+            // Listen for temperature changes
+            temperatureRef.on('value', function(snapshot) {
+                const currentTemperature = parseInt(snapshot.val());
+                roomStatus[room].temperature = currentTemperature <= temperatureThreshold;
+                if (!roomStatus[room].temperature) {
+                    displayAlert(`Temperature threshold exceeded in ${roomName}: ${currentTemperature}°C`);
+                }
+                checkAllOK();
+            });
+
+            // Listen for humidity changes
+            humidityRef.on('value', function(snapshot) {
+                const currentHumidity = parseInt(snapshot.val());
+                roomStatus[room].humidity = currentHumidity <= humidityThreshold;
+                if (!roomStatus[room].humidity) {
+                    displayAlert(`Humidity threshold exceeded in ${roomName}: ${currentHumidity}%`);
+                }
+                checkAllOK();
+            });
+
+            // Listen for light changes
+            lightRef.on('value', function(snapshot) {
+                const currentLight = parseInt(snapshot.val());
+                roomStatus[room].light = currentLight <= lightThreshold;
+                if (!roomStatus[room].light) {
+                    displayAlert(`Light threshold exceeded in ${roomName}: ${currentLight}%`);
+                }
+                checkAllOK();
+            });
+
+            // Listen for gas changes
+            gasRef.on('value', function(snapshot) {
+                const currentGas = parseInt(snapshot.val());
+                roomStatus[room].gas = currentGas <= gasThreshold;
+                if (!roomStatus[room].gas) {
+                    displayAlert(`Gas threshold exceeded in ${roomName}: ${currentGas} ppm`);
+                }
+                checkAllOK();
+            });
+        }
+
+        // Function to display alert
+        function displayAlert(message) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertsDiv = document.getElementById('alerts');
+
+            alertContainer.style.display = 'block';
+            alertsDiv.innerHTML += message + '<br>';
+        }
+    });
+
+
+        
+    </script>
+</body>
+</html>
