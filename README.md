@@ -7,7 +7,7 @@ To run this project, you need to
 - Add Realtime Database:
   + All products/Build/Realtime Database/Create Database/Next/Enable
   + Rules -> change ".read": false,".write": false to ".read": true,".write": true -> Publish
-  + And then you need dto creat the data structure like the 'tt-iot-tuan3-default-rtdb-export.json'
+  + And then you need to create the data structure like the 'tt-iot-tuan3-default-rtdb-export.json'
 - Add Authentication:
   + All products/Build/Authentication/Get started/Email/Password/Enable All/Save
   + User/Add user -> Create Email(@...) and Password
